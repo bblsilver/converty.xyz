@@ -3,20 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Converter</title>
+    <title>Pro Image Converter</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a nicer look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Image Converter</h1>
-        <input type="file" id="imageInput" accept="image/*">
-        <select id="formatSelect">
-            <option value="image/jpeg">JPEG</option>
-            <option value="image/png">PNG</option>
-            <option value="image/webp">WebP</option>
-        </select>
-        <button onclick="convertImage()">Convert</button>
-        <a id="downloadLink" style="display:none; margin-top: 20px; color: white;">Download Image</a>
+        <h1>✨ Image Converter</h1>
+        <p class="subtitle">Convert PNG, JPG, WebP, and more instantly.</p>
+        
+        <div class="upload-area" id="dropZone">
+            <input type="file" id="imageInput" accept="image/*" hidden>
+            <div class="upload-icon">📁</div>
+            <p>Click to upload or drag & drop</p>
+            <span class="file-name" id="fileName">No file chosen</span>
+        </div>
+
+        <div id="previewContainer" style="display:none;">
+            <img id="imagePreview" src="" alt="Preview">
+        </div>
+
+        <div class="controls">
+            <label>Convert to:</label>
+            <select id="formatSelect">
+                <option value="image/jpeg">JPEG (JPG)</option>
+                <option value="image/png">PNG</option>
+                <option value="image/webp">WebP (Best for Web)</option>
+                <option value="image/gif">GIF</option>
+                <option value="image/bmp">BMP</option>
+            </select>
+            
+            <button onclick="convertImage()" class="convert-btn">Convert Image</button>
+        </div>
+
+        <a id="downloadLink" class="download-btn" style="display:none;">⬇️ Download Image</a>
     </div>
     <script src="script.js"></script>
 </body>
