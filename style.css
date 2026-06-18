@@ -1,12 +1,11 @@
 :root {
     --pastel-red: #ff9999;
-    --pastel-red-hover: #ff7575;
+    --pastel-red-dark: #ff8080;
+    --pastel-red-light: #ffb3b3;
     --text-dark: #333;
     --text-light: #666;
     --bg-color: #f4f6f8;
     --card-bg: #ffffff;
-    --dropdown-bg: #ffffff;
-    --dropdown-hover: #f0f0f0;
 }
 
 body {
@@ -33,143 +32,72 @@ body {
 }
 
 h1 { margin: 0; color: var(--text-dark); font-weight: 600; font-size: 1.8rem; }
-.subtitle { margin: -10px 0 20px 0; color: var(--text-light); font-size: 0.95rem; }
+.subtitle { margin: -10px 0 10px 0; color: var(--text-light); font-size: 0.95rem; }
 
-/* Split Button Layout */
-.split-button-group {
+/* --- THE UNIFIED BAR --- */
+.split-button-container {
     display: flex;
     width: 100%;
-    height: 50px; /* Taller height */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 55px; /* Taller height */
     border-radius: 8px;
-    overflow: hidden;
+    overflow: hidden; /* Ensures rounded corners only on outside */
+    box-shadow: 0 4px 15px rgba(255, 153, 153, 0.4);
 }
 
-/* The Red Pastel Button */
-.choose-btn {
+/* Left Button: Choose Files */
+.main-btn {
+    flex-grow: 1; /* Takes up most space */
     background-color: var(--pastel-red);
     color: white;
     border: none;
-    padding: 0 20px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
-    flex-grow: 1; /* Takes up remaining space */
-    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.3); /* Subtle separator */
 }
 
-.choose-btn:hover { background-color: var(--pastel-red-hover); }
+.main-btn:hover {
+    background-color: var(--pastel-red-dark);
+}
 
-/* The Arrow Section */
-.dropdown-trigger-wrapper {
-    position: relative;
+/* Right Button: The Arrow */
+.arrow-trigger {
     width: 50px; /* Fixed width for arrow */
-    background-color: #ff8585; /* Slightly darker red for contrast */
+    background-color: var(--pastel-red);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    position: relative; /* Needed for dropdown positioning */
     transition: background 0.2s;
 }
 
-.dropdown-trigger-wrapper:hover {
-    background-color: #ff7070;
+.arrow-trigger:hover {
+    background-color: var(--pastel-red-dark);
 }
 
-.dropdown-arrow {
+/* The Arrow Icon */
+.arrow-icon {
     color: white;
     font-size: 0.8rem;
     font-weight: bold;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
 }
 
-/* Flip arrow when active */
-.dropdown-trigger-wrapper.active .dropdown-arrow {
+/* FLIP ON HOVER */
+.arrow-trigger:hover .arrow-icon {
     transform: rotate(180deg);
 }
 
-/* The Dropdown Menu */
-.dropdown-menu {
+/* The Dropdown Options (Pastel Red Boxes) */
+.dropdown-options {
     position: absolute;
-    top: 100%; /* Appears directly below */
+    top: 100%; /* Directly below the arrow */
     right: 0;
-    background: var(--dropdown-bg);
-    border: 1px solid #eee;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    width: 160px;
+    width: 140px;
+    background: transparent;
     display: none; /* Hidden by default */
     flex-direction: column;
-    overflow: hidden;
-    z-index: 100;
-    margin-top: 5px;
-}
-
-.dropdown-menu.show {
-    display: flex;
-}
-
-.dropdown-item {
-    padding: 12px 15px;
-    text-align: left;
-    color: var(--text-dark);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    border-bottom: 1px solid #f9f9f9;
-}
-
-.dropdown-item:last-child { border-bottom: none; }
-.dropdown-item:hover { background-color: var(--dropdown-hover); }
-
-.file-info { 
-    font-size: 0.9rem; 
-    color: var(--text-light); 
-    min-height: 20px; 
-    font-weight: 500;
-}
-
-.preview-container {
-    margin-top: 10px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #eee;
-    max-height: 200px;
-    display: flex;
-    justify-content: center;
-    background: #fafafa;
-}
-
-#imagePreview { max-width: 100%; max-height: 200px; object-fit: contain; }
-
-.action-btn {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-    display: none;
-}
-
-.action-btn:hover { background-color: #000; }
-
-.download-btn {
-    display: none;
-    background-color: #4caf50;
-    color: white;
-    text-decoration: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-top: 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.download-btn:hover { background-color: #45a049; }Copied!   
+    gap: 5px;
+       
