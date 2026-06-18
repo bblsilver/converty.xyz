@@ -7,7 +7,7 @@
 * **Sleek Interactions:** Clean dropdown menu transitions that smoothly reveal formatting options on hover.
 * **Format Support:** Convert files instantly to the following formats: **JPG, PNG, WebP, GIF, or BMP**.
 * **Smart Processing:** When converting to JPG images will automatically add a white background to prevent rendering artifacts.
-* 
+  
 ## Built With
 * **HTML5** 
 * **CSS3** 
