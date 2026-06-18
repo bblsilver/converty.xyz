@@ -3,42 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Image Converter</title>
+    <title>Image Converter</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for a nicer look -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>✨ Image Converter</h1>
-        <p class="subtitle">Convert PNG, JPG, WebP, and more instantly.</p>
-        
-        <div class="upload-area" id="dropZone">
-            <input type="file" id="imageInput" accept="image/*" hidden>
-            <div class="upload-icon">📁</div>
-            <p>Click to upload or drag & drop</p>
-            <span class="file-name" id="fileName">No file chosen</span>
+    <div class="main-card">
+        <h1>Image Converter</h1>
+        <p class="subtitle">Convert your images instantly</p>
+
+        <!-- The Dropdown for Conversion Options -->
+        <div class="dropdown-container">
+            <select id="conversionType">
+                <option value="" disabled selected>Select Conversion Type</option>
+                <option value="to-jpg">Convert to JPG</option>
+                <option value="to-png">Convert to PNG</option>
+                <option value="to-webp">Convert to WebP</option>
+                <option value="to-gif">Convert to GIF</option>
+                <option value="to-bmp">Convert to BMP</option>
+            </select>
         </div>
 
-        <div id="previewContainer" style="display:none;">
+        <!-- The Pastel Red Choose Files Button -->
+        <button class="choose-btn" onclick="document.getElementById('imageInput').click()">
+            Choose Files
+        </button>
+        <input type="file" id="imageInput" accept="image/*" hidden>
+
+        <!-- File Name Display -->
+        <div id="fileInfo" class="file-info"></div>
+
+        <!-- Preview Area -->
+        <div id="previewContainer" class="preview-container" style="display:none;">
             <img id="imagePreview" src="" alt="Preview">
         </div>
 
-        <div class="controls">
-            <label>Convert to:</label>
-            <select id="formatSelect">
-                <option value="image/jpeg">JPEG (JPG)</option>
-                <option value="image/png">PNG</option>
-                <option value="image/webp">WebP (Best for Web)</option>
-                <option value="image/gif">GIF</option>
-                <option value="image/bmp">BMP</option>
-            </select>
-            
-            <button onclick="convertImage()" class="convert-btn">Convert Image</button>
-        </div>
+        <!-- Action Button -->
+        <button id="convertBtn" class="action-btn" onclick="convertImage()" style="display:none;">
+            Convert Now
+        </button>
 
-        <a id="downloadLink" class="download-btn" style="display:none;">⬇️ Download Image</a>
+        <!-- Download Link -->
+        <a id="downloadLink" class="download-btn" style="display:none;">Download Image</a>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>   
