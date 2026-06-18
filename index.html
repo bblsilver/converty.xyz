@@ -11,25 +11,43 @@
         <h1>Image Converter</h1>
         <p class="subtitle">Convert your images instantly</p>
 
-        <!-- Combined Upload and Dropdown Area -->
-        <div class="upload-combo">
+        <!-- Split Button Container -->
+        <div class="split-button-group">
+            <!-- The Red Pastel Button -->
             <button class="choose-btn" onclick="document.getElementById('imageInput').click()">
                 Choose Files
             </button>
             
-            <div class="dropdown-wrapper">
-                <select id="conversionType">
-                    <option value="" disabled selected>Convert to...</option>
-                    <option value="to-jpg">JPG</option>
-                    <option value="to-png">PNG</option>
-                    <option value="to-webp">WebP</option>
-                    <option value="to-gif">GIF</option>
-                    <option value="to-bmp">BMP</option>
-                </select>
+            <!-- The Dropdown Arrow & Menu -->
+            <div class="dropdown-trigger-wrapper">
+                <div class="dropdown-arrow" onclick="toggleDropdown()">▼</div>
+                <div class="dropdown-menu" id="conversionMenu">
+                    <div class="dropdown-item" onclick="selectFormat('to-jpg')">Convert to JPG</div>
+                    <div class="dropdown-item" onclick="selectFormat('to-png')">Convert to PNG</div>
+                    <div class="dropdown-item" onclick="selectFormat('to-webp')">Convert to WebP</div>
+                    <div class="dropdown-item" onclick="selectFormat('to-gif')">Convert to GIF</div>
+                    <div class="dropdown-item" onclick="selectFormat('to-bmp')">Convert to BMP</div>
+                </div>
             </div>
         </div>
 
+        <!-- Hidden Input -->
         <input type="file" id="imageInput" accept="image/*" hidden>
-        <div id="fileInfo" class="file-info"></div>
+        
+        <!-- Display Selected Format -->
+        <div id="fileInfo" class="file-info">Select a format from the arrow</div>
 
-        <div id="previewContainer" class=Copied!   
+        <!-- Preview & Actions -->
+        <div id="previewContainer" class="preview-container" style="display:none;">
+            <img id="imagePreview" src="" alt="Preview">
+        </div>
+
+        <button id="convertBtn" class="action-btn" onclick="convertImage()" style="display:none;">
+            Convert Now
+        </button>
+
+        <a id="downloadLink" class="download-btn" style="display:none;">Download Image</a>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>   
