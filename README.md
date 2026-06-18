@@ -14,4 +14,4 @@
 * **JavaScript (Vanilla)** 
 
 
-<small>Completely free to use & open-sourced</small>
+<h6><sub>Completely open-sourced & free to use</sub></h6>
