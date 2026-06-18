@@ -11,31 +11,33 @@
         <h1>Image Converter</h1>
         <p class="subtitle">Convert your images instantly</p>
 
-        <!-- Split Button Container -->
-        <div class="split-button-group">
-            <!-- The Red Pastel Button -->
-            <button class="choose-btn" onclick="document.getElementById('imageInput').click()">
+        <!-- Unified Split Button Bar -->
+        <div class="split-button-container">
+            <!-- Left Side: Choose Files -->
+            <button class="main-btn" onclick="document.getElementById('imageInput').click()">
                 Choose Files
             </button>
             
-            <!-- The Dropdown Arrow & Menu -->
-            <div class="dropdown-trigger-wrapper">
-                <div class="dropdown-arrow" onclick="toggleDropdown()">▼</div>
-                <div class="dropdown-menu" id="conversionMenu">
-                    <div class="dropdown-item" onclick="selectFormat('to-jpg')">Convert to JPG</div>
-                    <div class="dropdown-item" onclick="selectFormat('to-png')">Convert to PNG</div>
-                    <div class="dropdown-item" onclick="selectFormat('to-webp')">Convert to WebP</div>
-                    <div class="dropdown-item" onclick="selectFormat('to-gif')">Convert to GIF</div>
-                    <div class="dropdown-item" onclick="selectFormat('to-bmp')">Convert to BMP</div>
+            <!-- Right Side: The Arrow Trigger -->
+            <div class="arrow-trigger" id="arrowTrigger">
+                <div class="arrow-icon">▼</div>
+                
+                <!-- The Dropdown Menu (Hidden by default) -->
+                <div class="dropdown-options" id="dropdownOptions">
+                    <div class="option-item" onclick="setFormat('to-jpg')">JPG</div>
+                    <div class="option-item" onclick="setFormat('to-png')">PNG</div>
+                    <div class="option-item" onclick="setFormat('to-webp')">WebP</div>
+                    <div class="option-item" onclick="setFormat('to-gif')">GIF</div>
+                    <div class="option-item" onclick="setFormat('to-bmp')">BMP</div>
                 </div>
             </div>
         </div>
 
-        <!-- Hidden Input -->
+        <!-- Hidden File Input -->
         <input type="file" id="imageInput" accept="image/*" hidden>
         
-        <!-- Display Selected Format -->
-        <div id="fileInfo" class="file-info">Select a format from the arrow</div>
+        <!-- Status Text -->
+        <div id="statusText" class="status-text">Select a format from the arrow</div>
 
         <!-- Preview & Actions -->
         <div id="previewContainer" class="preview-container" style="display:none;">
