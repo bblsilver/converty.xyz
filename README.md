@@ -14,4 +14,4 @@
 * **JavaScript (Vanilla)** 
 
 
-<h6><sub>Completely open-sourced & free to use</sub></h6>
+<h6><sub>Converty.xyz is completely open-sourced & free to use</sub></h6>
