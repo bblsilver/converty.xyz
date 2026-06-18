@@ -100,4 +100,82 @@ h1 { margin: 0; color: var(--text-dark); font-weight: 600; font-size: 1.8rem; }
     display: none; /* Hidden by default */
     flex-direction: column;
     gap: 5px;
-       
+    padding-top: 10px; /* Space between arrow and options */
+    z-index: 100;
+}
+
+/* Show Dropdown on Hover */
+.arrow-trigger:hover .dropdown-options {
+    display: flex;
+}
+
+/* Individual Option Boxes */
+.option-item {
+    background-color: var(--pastel-red);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.option-item:hover {
+    background-color: var(--pastel-red-dark);
+    transform: scale(1.05);
+}
+
+/* --- Status & Preview --- */
+.status-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    min-height: 20px;
+    font-weight: 500;
+}
+
+.preview-container {
+    margin-top: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    max-height: 200px;
+    display: flex;
+    justify-content: center;
+    background: #fafafa;
+}
+
+#imagePreview { max-width: 100%; max-height: 200px; object-fit: contain; }
+
+.action-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+}
+
+.action-btn:hover { background-color: #000; }
+
+.download-btn {
+    display: none;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.download-btn:hover { background-color: #45a049; }   
