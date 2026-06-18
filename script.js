@@ -65,7 +65,7 @@ function convertImage() {
             canvas.height = img.height;
             const ctx = canvas.getContext('2d');
 
-            // White background for JPEGs
+            // White background for JPEGs to maintain transparency layers
             if (targetFormat === 'image/jpeg') {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -83,4 +83,4 @@ function convertImage() {
         img.src = e.target.result;
     };
     reader.readAsDataURL(selectedFile);
-}Copied!   
+}
