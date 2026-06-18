@@ -18,6 +18,7 @@ function setFormat(format) {
 
 // Handle File Selection
 imageInput.addEventListener('change', function(e) {
+    // FIXED: Correctly targeted the first file in the array index [0]
     if (e.target.files && e.target.files[0]) {
         selectedFile = e.target.files[0];
         statusText.textContent = `Selected: ${selectedFile.name}`;
@@ -65,7 +66,7 @@ function convertImage() {
             canvas.height = img.height;
             const ctx = canvas.getContext('2d');
 
-            // White background for JPEGs to maintain transparency layers
+            // White background for JPEGs
             if (targetFormat === 'image/jpeg') {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
