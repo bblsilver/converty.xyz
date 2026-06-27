@@ -6,7 +6,7 @@
     <title>Converty.xyz</title>
     <!-- Embedded SVG Favicon matching your exact folder icon and pastel red color -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 100 100'%3E%3Cpath d='M10,25 C10,20 14,16 19,16 L40,16 L48,24 L81,24 C86,24 90,28 90,33 L90,75 C90,80 86,84 81,84 L19,84 C14,84 10,80 10,75 Z' fill='%23ff9999'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
     <!-- Include Gifshot CDN for client-side animated GIF processing -->
     <script src="https://cloudflare.com"></script>
 </head>
@@ -16,8 +16,8 @@
         <div class="nav-menu-container">
             <button class="menu-trigger-btn" onclick="toggleNavMenu(event)">☰</button>
             <div id="navMenuDropdown" class="nav-dropdown-content">
-                <div class="nav-dropdown-item" onclick="switchView('image')">📷 Image Converter</div>
-                <div class="nav-dropdown-item" onclick="switchView('gif')">🎞️ GIF Converter</div>
+                <div class="nav-dropdown-item" onclick="switchView('image')">Image Converter</div>
+                <div class="nav-dropdown-item" onclick="switchView('gif')">GIF Converter</div>
             </div>
         </div>
 
@@ -65,12 +65,12 @@
         <!-- ============================================== -->
         <div id="gifView" class="converter-view" style="display: none;">
             <h1>GIF Converter</h1>
-            <p class="subtitle">Turn video clips into animated GIFs</p>
+            <p class="subtitle">Turn video clips or static images into GIFs</p>
 
             <div class="button-bar-container">
                 <div class="button-bar">
                     <button class="choose-btn" onclick="document.getElementById('gifVideoInput').click()">
-                        Choose Video
+                        Choose Media
                     </button>
                     <div class="dropdown">
                         <div class="arrow">▼</div>
@@ -81,14 +81,16 @@
                 </div>
             </div>
 
-            <input type="file" id="gifVideoInput" accept="video/mp4,video/webm" hidden>
+            <!-- Expanded file acceptance limits to let users drop regular images into the GIF loop builder -->
+            <input type="file" id="gifVideoInput" accept="video/mp4,video/webm,image/*" hidden>
             <div id="gifStatusText" class="status-text">Select animated GIF from the arrow</div>
 
             <div id="gifPreviewContainer" class="preview-container" style="display:none;">
-                <video id="gifVideoPreview" controls muted></video>
+                <img id="gifImagePreview" src="" alt="Preview" style="display:none;">
+                <video id="gifVideoPreview" controls muted style="display:none;"></video>
             </div>
 
-            <button id="gifConvertBtn" class="action-btn" onclick="convertVideoToGif()" style="display:none;">
+            <button id="gifConvertBtn" class="action-btn" onclick="convertMediaToGif()" style="display:none;">
                 Convert Now
             </button>
 
