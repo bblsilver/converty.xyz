@@ -3,7 +3,6 @@ function toggleNavMenu(event) {
     event.stopPropagation();
     const menu = document.getElementById('navMenuDropdown');
     
-    // Explicit style toggles to prevent overlapping
     if (menu.style.display === 'block') {
         menu.style.display = 'none';
     } else {
@@ -16,7 +15,7 @@ function switchView(viewName) {
     const gifView = document.getElementById('gifView');
     const menu = document.getElementById('navMenuDropdown');
     
-    menu.style.display = 'none'; // Closes menu layer completely on selection
+    menu.style.display = 'none';
 
     if (viewName === 'image') {
         imageView.style.display = 'flex';
@@ -27,7 +26,6 @@ function switchView(viewName) {
     }
 }
 
-// Close dropdown if the user clicks anywhere else on the interface
 window.addEventListener('click', function() {
     const menu = document.getElementById('navMenuDropdown');
     if (menu) {
@@ -121,11 +119,12 @@ function convertImage() {
 }
 
 
-// ====== VIEW 2: GIF CONVERTER ENGINE ======
+// ====== VIEW 2: DUAL-MODE GIF CONVERTER ENGINE ======
 const gifVideoInput = document.getElementById('gifVideoInput');
 const gifStatusText = document.getElementById('gifStatusText');
 const gifPreviewContainer = document.getElementById('gifPreviewContainer');
 const gifVideoPreview = document.getElementById('gifVideoPreview');
+const gifImagePreview = document.getElementById('gifImagePreview');
 const gifConvertBtn = document.getElementById('gifConvertBtn');
 const gifDownloadLink = document.getElementById('gifDownloadLink');
 
@@ -141,22 +140,35 @@ function setGifFormat(format) {
 gifVideoInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
         selectedGifFile = e.target.files[0];
-        gifStatusText.textContent = `Selected Video: ${selectedGifFile.name}`;
+        gifStatusText.textContent = `Selected: ${selectedGifFile.name}`;
         gifStatusText.style.color = '#666';
         
-        const videoUrl = URL.createObjectURL(selectedGifFile);
-        gifVideoPreview.src = videoUrl;
-        gifPreviewContainer.style.display = 'flex';
-        gifConvertBtn.style.display = 'block';
+        gifVideoPreview.style.display = 'none';
+        gifImagePreview.style.display = 'none';
         gifDownloadLink.style.display = 'none';
 
+        if (selectedGifFile.type.startsWith('video/')) {
+            const videoUrl = URL.createObjectURL(selectedGifFile);
+            gifVideoPreview.src = videoUrl;
+            gifVideoPreview.style.display = 'block';
+        } else if (selectedGifFile.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                gifImagePreview.src = e.target.result;
+                gifImagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(selectedGifFile);
+        }
+
+        gifPreviewContainer.style.display = 'flex';
+        gifConvertBtn.style.display = 'block';
         setGifFormat('to-gif');
     }
 });
 
-function convertVideoToGif() {
+function convertMediaToGif() {
     if (!selectedGifFile) {
-        alert("Please choose a video file first!");
+        alert("Please choose a file first!");
         return;
     }
     if (!selectedGifFormat) {
@@ -168,29 +180,47 @@ function convertVideoToGif() {
     gifStatusText.style.color = '#ff9999';
     gifConvertBtn.disabled = true;
 
-    const videoUrl = URL.createObjectURL(selectedGifFile);
+    // SCENARIO A: Input file is a standard Video asset
+    if (selectedGifFile.type.startsWith('video/')) {
+        const videoUrl = URL.createObjectURL(selectedGifFile);
+        gifshot.createGIF({
+            video: [videoUrl],
+            gifWidth: 400,
+            gifHeight: 400,
+            interval: 0.1,
+            numFrames: 30,
+            sampleInterval: 10
+        }, handleGifshotResponse);
+    } 
+    // SCENARIO B: Input file is a Static Image. We pass it as a sequence array to compile a true multi-frame container loop
+    else if (selectedGifFile.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Str = e.target.result;
+            gifshot.createGIF({
+                images: [base64Str, base64Str], // Double frames force proper multi-frame format recognition across Discord servers
+                gifWidth: 400,
+                gifHeight: 400,
+                interval: 0.2 // Minimal frame delay spacing duration bounds
+            }, handleGifshotResponse);
+        };
+        reader.readAsDataURL(selectedGifFile);
+    }
+}
 
-    gifshot.createGIF({
-        video: [videoUrl],
-        gifWidth: 400,
-        gifHeight: 400,
-        interval: 0.1,
-        numFrames: 30,
-        sampleInterval: 10
-    }, function(obj) {
-        gifConvertBtn.disabled = false;
-        if (!obj.error) {
-            const dataUrl = obj.image;
-            gifDownloadLink.href = dataUrl;
-            gifDownloadLink.download = `converted-${selectedGifFile.name.split('|')[0]}.gif`;
-            gifDownloadLink.textContent = `Download .GIF`;
-            gifDownloadLink.style.display = 'block';
-            gifStatusText.textContent = "Conversion Complete!";
-            gifStatusText.style.color = '#666';
-            gifDownloadLink.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            alert("GIF conversion failed: " + obj.errorMsg);
-            gifStatusText.textContent = "Conversion failed.";
-        }
-    });
+function handleGifshotResponse(obj) {
+    gifConvertBtn.disabled = false;
+    if (!obj.error) {
+        const dataUrl = obj.image;
+        gifDownloadLink.href = dataUrl;
+        gifDownloadLink.download = `converted-${selectedGifFile.name.split('|')[0]}.gif`;
+        gifDownloadLink.textContent = `Download .GIF`;
+        gifDownloadLink.style.display = 'block';
+        gifStatusText.textContent = "Conversion Complete!";
+        gifStatusText.style.color = '#666';
+        gifDownloadLink.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        alert("GIF conversion failed: " + obj.errorMsg);
+        gifStatusText.textContent = "Conversion failed.";
+    }
 }
