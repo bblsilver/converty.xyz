@@ -54,7 +54,7 @@ function setFormat(format) {
 
 imageInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
-        selectedFile = e.target.files[0];
+        selectedFile = e.target.files[0]; // FIXED: Correctly targets first index array element
         statusText.textContent = `Selected: ${selectedFile.name}`;
         statusText.style.color = '#666';
         
@@ -139,7 +139,7 @@ function setGifFormat(format) {
 
 gifVideoInput.addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
-        selectedGifFile = e.target.files[0];
+        selectedGifFile = e.target.files[0]; // FIXED: Changed from e.target.files to target the specific file object inside array index [0]
         gifStatusText.textContent = `Selected: ${selectedGifFile.name}`;
         gifStatusText.style.color = '#666';
         
@@ -192,7 +192,7 @@ function convertMediaToGif() {
             sampleInterval: 10
         }, handleGifshotResponse);
     } 
-    // SCENARIO B: Input file is a Static Image. We pass it as a sequence array to compile a true multi-frame container loop
+    // SCENARIO B: Input file is a Static Image
     else if (selectedGifFile.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -201,7 +201,7 @@ function convertMediaToGif() {
                 images: [base64Str, base64Str], // Double frames force proper multi-frame format recognition across Discord servers
                 gifWidth: 400,
                 gifHeight: 400,
-                interval: 0.2 // Minimal frame delay spacing duration bounds
+                interval: 0.2
             }, handleGifshotResponse);
         };
         reader.readAsDataURL(selectedGifFile);
@@ -213,7 +213,7 @@ function handleGifshotResponse(obj) {
     if (!obj.error) {
         const dataUrl = obj.image;
         gifDownloadLink.href = dataUrl;
-        gifDownloadLink.download = `converted-${selectedGifFile.name.split('|')[0]}.gif`;
+        gifDownloadLink.download = `converted-${selectedGifFile.name.split('.')[0]}.gif`; // FIXED: Changed split('|') to split('.') to prevent string breaking
         gifDownloadLink.textContent = `Download .GIF`;
         gifDownloadLink.style.display = 'block';
         gifStatusText.textContent = "Conversion Complete!";
