@@ -3,47 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Converter</title>
+    <title>Converty.xyz</title>
     <!-- Embedded SVG Favicon matching your exact folder icon and pastel red color -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 100 100'%3E%3Cpath d='M10,25 C10,20 14,16 19,16 L40,16 L48,24 L81,24 C86,24 90,28 90,33 L90,75 C90,80 86,84 81,84 L19,84 C14,84 10,80 10,75 Z' fill='%23ff9999'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
+    <!-- Include Gifshot CDN for client-side animated GIF processing -->
+    <script src="https://cloudflare.com"></script>
 </head>
 <body>
     <div class="main-card">
-        <h1>Image Converter</h1>
-        <p class="subtitle">Convert your images instantly</p>
-
-        <!-- Unified Button Bar Container -->
-        <div class="button-bar-container">
-            <div class="button-bar">
-                <button class="choose-btn" onclick="document.getElementById('imageInput').click()">
-                    Choose Files
-                </button>
-                <div class="dropdown">
-                    <div class="arrow" id="arrow">▼</div>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item" onclick="setFormat('to-jpg')">JPG</div>
-                        <div class="dropdown-item" onclick="setFormat('to-png')">PNG</div>
-                        <div class="dropdown-item" onclick="setFormat('to-webp')">WebP</div>
-                        <div class="dropdown-item" onclick="setFormat('to-gif')">GIF</div>
-                        <div class="dropdown-item" onclick="setFormat('to-bmp')">BMP</div>
-                    </div>
-                </div>
+        <!-- Hamburger Nav Button and Dropdown -->
+        <div class="nav-menu-container">
+            <button class="menu-trigger-btn" onclick="toggleNavMenu(event)">☰</button>
+            <div id="navMenuDropdown" class="nav-dropdown-content">
+                <div class="nav-dropdown-item" onclick="switchView('image')">📷 Image Converter</div>
+                <div class="nav-dropdown-item" onclick="switchView('gif')">🎞️ GIF Converter</div>
             </div>
         </div>
 
-        <input type="file" id="imageInput" accept="image/*" hidden>
-        <div id="statusText" class="status-text">Select a format from the arrow</div>
+        <!-- ============================================== -->
+        <!-- VIEW 1: IMAGE CONVERTER (Exactly your original)-->
+        <!-- ============================================== -->
+        <div id="imageView" class="converter-view">
+            <h1>Image Converter</h1>
+            <p class="subtitle">Convert your images instantly</p>
 
-        <div id="previewContainer" class="preview-container" style="display:none;">
-            <img id="imagePreview" src="" alt="Preview">
+            <div class="button-bar-container">
+                <div class="button-bar">
+                    <button class="choose-btn" onclick="document.getElementById('imageInput').click()">
+                        Choose Files
+                    </button>
+                    <div class="dropdown">
+                        <div class="arrow">▼</div>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item" onclick="setFormat('to-jpg')">JPG</div>
+                            <div class="dropdown-item" onclick="setFormat('to-png')">PNG</div>
+                            <div class="dropdown-item" onclick="setFormat('to-webp')">WebP</div>
+                            <div class="dropdown-item" onclick="setFormat('to-gif')">GIF</div>
+                            <div class="dropdown-item" onclick="setFormat('to-bmp')">BMP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="file" id="imageInput" accept="image/*" hidden>
+            <div id="statusText" class="status-text">Select a format from the arrow</div>
+
+            <div id="previewContainer" class="preview-container" style="display:none;">
+                <img id="imagePreview" src="" alt="Preview">
+            </div>
+
+            <button id="convertBtn" class="action-btn" onclick="convertImage()" style="display:none;">
+                Convert Now
+            </button>
+
+            <a id="downloadLink" class="download-btn" style="display:none;">Download Image</a>
         </div>
 
-        <button id="convertBtn" class="action-btn" onclick="convertImage()" style="display:none;">
-            Convert Now
-        </button>
+        <!-- ============================================== -->
+        <!-- VIEW 2: GIF CONVERTER (Same exact aesthetic)  -->
+        <!-- ============================================== -->
+        <div id="gifView" class="converter-view" style="display: none;">
+            <h1>GIF Converter</h1>
+            <p class="subtitle">Turn video clips into animated GIFs</p>
 
-        <a id="downloadLink" class="download-btn" style="display:none;">Download Image</a>
+            <div class="button-bar-container">
+                <div class="button-bar">
+                    <!-- Standardized click trigger matching file input layout definitions -->
+                    <button class="choose-btn" onclick="document.getElementById('gifVideoInput').click()">
+                        Choose Video
+                    </button>
+                    <div class="dropdown">
+                        <div class="arrow">▼</div>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item" onclick="setGifFormat('to-gif')">GIF (Animated)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="file" id="gifVideoInput" accept="video/mp4,video/webm" hidden>
+            <div id="gifStatusText" class="status-text">Select animated GIF from the arrow</div>
+
+            <div id="gifPreviewContainer" class="preview-container" style="display:none;">
+                <video id="gifVideoPreview" controls muted></video>
+            </div>
+
+            <button id="gifConvertBtn" class="action-btn" onclick="convertVideoToGif()" style="display:none;">
+                Convert Now
+            </button>
+
+            <a id="gifDownloadLink" class="download-btn" style="display:none;">Download GIF</a>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
