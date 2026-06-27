@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="main-card">
-        <!-- Hamburger Nav Button and Dropdown -->
+        <!-- Floating Corner Navigation Menu Wrapper -->
         <div class="nav-menu-container">
             <button class="menu-trigger-btn" onclick="toggleNavMenu(event)">☰</button>
             <div id="navMenuDropdown" class="nav-dropdown-content">
@@ -22,7 +22,7 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- VIEW 1: IMAGE CONVERTER (Exactly your original)-->
+        <!-- VIEW 1: IMAGE CONVERTER MODULE                 -->
         <!-- ============================================== -->
         <div id="imageView" class="converter-view">
             <h1>Image Converter</h1>
@@ -61,7 +61,7 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- VIEW 2: GIF CONVERTER (Same exact aesthetic)  -->
+        <!-- VIEW 2: GIF CONVERTER MODULE                   -->
         <!-- ============================================== -->
         <div id="gifView" class="converter-view" style="display: none;">
             <h1>GIF Converter</h1>
@@ -69,7 +69,6 @@
 
             <div class="button-bar-container">
                 <div class="button-bar">
-                    <!-- Standardized click trigger matching file input layout definitions -->
                     <button class="choose-btn" onclick="document.getElementById('gifVideoInput').click()">
                         Choose Video
                     </button>
