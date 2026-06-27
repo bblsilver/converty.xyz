@@ -28,7 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    position: relative; /* Essential relative container anchor for corner pins */
+    position: relative;
 }
 
 /* ============================================== */
@@ -57,7 +57,7 @@ body {
 }
 
 .nav-dropdown-content {
-    display: none; /* Controlled explicitly via style properties in JS */
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
