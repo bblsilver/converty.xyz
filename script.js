@@ -2,7 +2,13 @@
 function toggleNavMenu(event) {
     event.stopPropagation();
     const menu = document.getElementById('navMenuDropdown');
-    menu.classList.toggle('show');
+    
+    // Explicit style toggles to prevent overlapping
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'block';
+    }
 }
 
 function switchView(viewName) {
@@ -10,25 +16,27 @@ function switchView(viewName) {
     const gifView = document.getElementById('gifView');
     const menu = document.getElementById('navMenuDropdown');
     
-    menu.classList.remove('show');
+    menu.style.display = 'none'; // Closes menu layer completely on selection
 
     if (viewName === 'image') {
-        imageView.style.display = 'block';
+        imageView.style.display = 'flex';
         gifView.style.display = 'none';
     } else if (viewName === 'gif') {
         imageView.style.display = 'none';
-        gifView.style.display = 'block';
+        gifView.style.display = 'flex';
     }
 }
 
-// Close navigation panel dropdown seamlessly if the user clicks anywhere outside of it
+// Close dropdown if the user clicks anywhere else on the interface
 window.addEventListener('click', function() {
     const menu = document.getElementById('navMenuDropdown');
-    if (menu) menu.classList.remove('show');
+    if (menu) {
+        menu.style.display = 'none';
+    }
 });
 
 
-// ====== VIEW 1: ORIGINAL IMAGE CONVERTER LOGIC ======
+// ====== VIEW 1: IMAGE CONVERTER ENGINE ======
 const imageInput = document.getElementById('imageInput');
 const statusText = document.getElementById('statusText');
 const previewContainer = document.getElementById('previewContainer');
@@ -113,7 +121,7 @@ function convertImage() {
 }
 
 
-// ====== VIEW 2: NEW GIF CONVERTER LOGIC ======
+// ====== VIEW 2: GIF CONVERTER ENGINE ======
 const gifVideoInput = document.getElementById('gifVideoInput');
 const gifStatusText = document.getElementById('gifStatusText');
 const gifPreviewContainer = document.getElementById('gifPreviewContainer');
@@ -142,7 +150,6 @@ gifVideoInput.addEventListener('change', function(e) {
         gifConvertBtn.style.display = 'block';
         gifDownloadLink.style.display = 'none';
 
-        // Helpfully auto-select the Animated GIF conversion option out of user file drop events
         setGifFormat('to-gif');
     }
 });
@@ -175,7 +182,7 @@ function convertVideoToGif() {
         if (!obj.error) {
             const dataUrl = obj.image;
             gifDownloadLink.href = dataUrl;
-            gifDownloadLink.download = `converted-${selectedGifFile.name.split('.')[0]}.gif`;
+            gifDownloadLink.download = `converted-${selectedGifFile.name.split('|')[0]}.gif`;
             gifDownloadLink.textContent = `Download .GIF`;
             gifDownloadLink.style.display = 'block';
             gifStatusText.textContent = "Conversion Complete!";
