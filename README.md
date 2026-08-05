@@ -1,6 +1,6 @@
 # Converty.xyz 
 
-> [NOTE]
+> [!WARNING]
 > Please note that Converty.xyz is still a work in progress.
 
 - Converty.xyz is a completely client-sided image & GIF converter, allowing users to quickly convert images into various popular image formats instantly for download. Currently converty.xyz is compatible with the following file formats: JPG, PNG, WebP, GIF, and BMP. More formats will added in the future.
